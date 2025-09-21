@@ -20,14 +20,20 @@ function CommentBox() {
 
     setText("");
   };
+  
+function Comment({ text, commentId }) {
+  const reportComment = async () => {
+    await fetch("http://localhost:3000/report-comment", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ commentId, reason: "悪口" })
+    });
+    alert("通報しました");
+  };
 
   return (
     <div>
-      <div>
-        {messages.map((msg, i) => <div key={i}>{msg}</div>)}
-      </div>
-      <input value={text} onChange={e => setText(e.target.value)} />
-      <button onClick={sendComment}>送信</button>
+      {text} <button onClick={reportComment}>通報</button>
     </div>
   );
 }
